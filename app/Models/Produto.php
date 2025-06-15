@@ -11,5 +11,6 @@ class Produto extends Model
         'valor',
         'cor',
         'quantidade',
+        'imagem',
     ];
-}
+} 

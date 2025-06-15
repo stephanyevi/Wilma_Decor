@@ -14,6 +14,7 @@ class CreateProdutosTable extends Migration
             $table->decimal('valor', 10, 2);
             $table->string('cor');
             $table->integer('quantidade');
+            $table->string('imagem')->nullable();
             $table->timestamps();
         });
     }
@@ -22,4 +23,4 @@ class CreateProdutosTable extends Migration
     {
         Schema::dropIfExists('produtos');
     }
-}
+} 

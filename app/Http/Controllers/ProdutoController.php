@@ -14,14 +14,16 @@ class ProdutoController extends Controller
         $this->produtos = new Produto();
     }
 
-    
     public function index()
-    {
-        $produtos = $this->produtos->all();
-        return response()->json($produtos);
-    }
+{
+    $produtos = $this->produtos->orderBy('id')->get();
 
-    
+    return response()->json([
+        'produtos' => $produtos
+    ]);
+} 
+
+
     public function store(Request $request)
     {
         $request->validate([
@@ -29,6 +31,7 @@ class ProdutoController extends Controller
             'valor'      => ['required', 'numeric', 'between:0,9999.99'],
             'cor'        => ['required', 'string', 'max:50'],
             'quantidade' => ['required', 'integer'],
+            'imagem'     => ['nullable', 'string'],
         ]);
 
         $produto = Produto::create([
@@ -36,6 +39,7 @@ class ProdutoController extends Controller
             'valor'      => $request->valor,
             'cor'        => $request->cor,
             'quantidade' => $request->quantidade,
+            'imagem'     => $request->imagem,
         ]);
 
         return response()->json([
@@ -55,27 +59,24 @@ class ProdutoController extends Controller
         return response()->json($produto);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Produto $produto)
     {
-        $request->validate([
-            'nome'       => ['required', 'string', 'max:255' . $id], 
-            'valor'      => ['required', 'numeric', 'between:0,9999.99'],
-            'cor'        => ['required', 'string', 'max:50'],
-            'quantidade' => ['required', 'integer'],
+       $request->validate([
+            'nome'       => ['sometimes', 'string', 'max:255'],
+            'valor'      => ['sometimes', 'numeric', 'between:0,9999.99'],
+            'cor'        => ['sometimes', 'string', 'max:50'],
+            'quantidade' => ['sometimes', 'integer'],
+            'imagem'     => ['nullable', 'string'],
         ]);
-
-        $produto = Produto::find($id);
-
-        if (!$produto) {
-            return response()->json(['message' => 'Produto não encontrado.'], 404);
-        }
 
         $produto->update([
             'nome'       => $request->nome,
             'valor'      => $request->valor,
             'cor'        => $request->cor,
             'quantidade' => $request->quantidade,
+            'imagem'     => $request->imagem ?? null
         ]);
+
 
         return response()->json([
             'message' => 'Produto atualizado com êxito.',
@@ -83,7 +84,6 @@ class ProdutoController extends Controller
         ]);
     }
 
-    
     public function destroy($id)
     {
         $produto = Produto::find($id);
