@@ -17,7 +17,7 @@ class CreateProdutosTable extends Migration
             $table->string('imagem')->nullable();
             $table->timestamps();
         });
-    }
+    } 
 
     public function down()
     {

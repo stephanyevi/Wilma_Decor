@@ -13,4 +13,4 @@ class Produto extends Model
         'quantidade',
         'imagem',
     ];
-} 
+}  

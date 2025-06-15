@@ -12,7 +12,7 @@ class CreateCategoriasTable extends Migration
         $table->id();
         $table->string('nome');
         $table->timestamps();
-    });
+    }); 
 }
 
 

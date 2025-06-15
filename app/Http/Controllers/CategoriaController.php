@@ -24,7 +24,7 @@ class CategoriaController extends Controller
             'message' => 'Categorias encontradas.',
             'data' => $categorias
         ], 200);
-    } 
+    }  
 
 
     public function store(Request $request)
